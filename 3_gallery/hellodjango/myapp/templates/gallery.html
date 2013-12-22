@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Галерея изображений</title>
+    <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet" type="text/css" media="all" /> 
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/upclick-min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/nhpup_1.1.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/setup.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery-1.10.2.min.js"></script>
+    <script src="{{ STATIC_URL }}js/lightbox-2.6.min.js"></script>
+    <link href="{{ STATIC_URL }}css/lightbox.css" rel="stylesheet" />
+  </head>
+  <body>
+
+<div id="file_name" style="display:none;"> Nothing selected </div>
+<div class="pure-menu pure-menu-open pure-menu-horizontal"  id="demo-horizontal-menu">
+    <ul id="std-menu-items">
+        <li><a href="#" onclick="alert('Вы и так на домашней странице, лол');"> Home </a></li>
+        <li onclick="document.getElementById('id_image').click();" onmouseover="nhpup.popup($('#file_name').html());"> 
+        <a href="#"> Select image </a>
+        </li>
+        <li><a href="#" onclick="document.getElementById('submit_button').click();"> Upload selected image </a></li>     
+
+    </ul>
+</div>
+
+<div class="pure-g-r">
+      {% for image in images %}
+        <div class="pure-u-1-5">
+            <a href="{{ image.image.url }}" data-lightbox="roadtrip"><img src="{{ image.image.url }}" class="img" /></a>
+        </div>
+      {% endfor %}
+
+</div>
+
+<div style="display:none;">
+    <form action="{% url "upload_image" %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <p> {{ form.image }} </p>
+      <p><input type="submit" id="submit_button"/></p>
+    </form>
+    </div>
+    </div>
+
+
+      {% if DEBUG %}
+        {% if images %}
+          <ul>
+          {% for image in images %}
+            <li><a href="{{ image.image.url }}">{{ image }}</a></li>
+          {% endfor %}
+          </ul>
+        {% else %}
+          <p>No images.</p>
+        {% endif %}
+      {% endif %}
+  </body>
+
+</html>

@@ -1,0 +1,12 @@
+venv/
+*.pyc
+staticfiles
+log.txt
+media/
+.idea
+data
+Procfile
+requirements.txt
+__pycache__
+js/
+lightbox.css
